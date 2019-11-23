@@ -1,0 +1,40 @@
+plugins {
+    id 'gradle-clojure.clojure' version '0.4.0'
+}
+
+clojure {
+    builds {
+        main {
+            aotAll()
+        }
+    }
+}
+
+sourceSets {
+    main.resources.srcDirs = ['resources']
+    main.clojure.srcDirs = ['src']
+    dev.clojure.srcDirs = ['dev']
+
+    // disable test for not - need to find out how to run tests without needing to AOT everything
+    test.clojure.srcDirs = []
+//    test.clojure.srcDirs = ['test']
+}
+
+repositories {
+    jcenter()
+    maven { url = 'https://repo.clojars.org/' }
+}
+
+dependencies {
+    implementation 'org.clojure:clojure:1.9.0'
+    implementation 'io.pedestal:pedestal.service:0.5.7'
+    implementation 'io.pedestal:pedestal.jetty:0.5.7'
+
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+
+    // due to how clojure.test is executed, an explicit JUnit 4 dependency is needed
+    testImplementation 'junit:junit:4.12'
+
+    // due to the way Gradle's REPL is started, if you need tools.namespace, you must be on 0.3+
+    devImplementation 'org.clojure:tools.namespace:0.3.0-alpha4'
+}
