@@ -1,7 +1,11 @@
+// clojurephant
+// https://github.com/clojurephant/clojurephant
+
 plugins {
     id 'gradle-clojure.clojure' version '0.4.0'
 }
 
+// otherwise libraries are not copied inside the jar
 clojure {
     builds {
         main {
@@ -10,14 +14,25 @@ clojure {
     }
 }
 
-sourceSets {
-    main.resources.srcDirs = ['resources']
-    main.clojure.srcDirs = ['src']
-    dev.clojure.srcDirs = ['dev']
+// currently it fails to execute it with error
+// java.lang.ClassNotFoundException: clojure.lang.Var
+// the clojure library is smaller in the uberjar file compared to the uberjar created with leiningen
 
-    // disable test for not - need to find out how to run tests without needing to AOT everything
-    test.clojure.srcDirs = []
-//    test.clojure.srcDirs = ['test']
+jar {
+    manifest {
+        attributes 'Main-Class': 'pedestal_example.server'
+    }
+}
+
+// the following tasks will be running
+// checkClojure
+// compileClojure
+// compileTestClojure
+
+sourceSets {
+    main.clojure.srcDirs = ['src']
+    main.resources.srcDirs = ['resources']
+    test.clojure.srcDirs = ['test']
 }
 
 repositories {
