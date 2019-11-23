@@ -1,0 +1,7 @@
+@lang/lacinia identifier query
+type QueryRoot {
+  hello: String {
+    @doc "Returns a 'Hellow World!' kinda"
+    @lang/lacinia resolver resolver-hello
+  }
+}
