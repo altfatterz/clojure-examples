@@ -17,3 +17,6 @@ target
 .lein-repl-history
 build/
 node_modules/
+
+*.iml
+logs
